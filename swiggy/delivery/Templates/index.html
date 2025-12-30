@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome | MealMate</title>
+    {% load static %}
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff7043, #ff5722);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            width: 350px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 32px;
+            letter-spacing: 1px;
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            margin: 15px 0;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .signup {
+            background: white;
+            color: #ff5722;
+        }
+
+        .signup:hover {
+            background: #ffe0d6;
+            transform: translateY(-2px);
+        }
+
+        .signin {
+            border: 2px solid white;
+            color: white;
+        }
+
+        .signin:hover {
+            background: white;
+            color: #ff5722;
+            transform: translateY(-2px);
+        }
+
+        .tagline {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Welcome to MealMate 🍽️</h1>
+
+        <a href="open_signup" class="signup">SIGN UP</a>
+        <a href="open_signin" class="signin">SIGN IN</a>
+
+        <div class="tagline">
+            Discover • Order • Enjoy
+        </div>
+    </div>
+
+</body>
+</html>
