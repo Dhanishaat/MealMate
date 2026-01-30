@@ -3,36 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Your Cart</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        h2, h3 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        th {
+            background-color: #1995AD;
+            color: white;
+            padding: 14px;
+        }
+
+        td {
+            padding: 14px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background-color: #f1f9fb;
+        }
+
+        /* CART IMAGE */
+        .cart-img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* TOTAL */
+        .total-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: right;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* CHECKOUT BUTTON */
+        .checkout-btn {
+            display: block;
+            width: 200px;
+            margin: auto;
+            padding: 14px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
+
 <body>
-    Hello {{username}}
-    <!-- show current menu -->
-    <table border="1">
+
+    <h3>Hello {{ username }} 👋</h3>
+
+    <table>
         <thead>
             <tr>
                 <th>Item Image</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Price</th>
+                <th>Price (₹)</th>
             </tr>
         </thead>
+
         <tbody>
-            {%  for item in itemList %}
-                <tr>
-                    <td>
-                        <img src="{{ item.picture }}">
-                    </td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.description }}</td>
-                    <td>{{ item.price }}</td>
-                </tr>
+            {% for item in itemList %}
+            <tr>
+                <td>
+                    <img src="{{ item.picture }}" class="cart-img">
+                </td>
+                <td><strong>{{ item.name }}</strong></td>
+                <td>{{ item.description }}</td>
+                <td>₹ {{ item.price }}</td>
+            </tr>
             {% endfor %}
         </tbody>
-        <h2>Total price : {{total_price}}</h2>
-        <form action="{% url 'checkout' username %}">
-            <input type="submit" value="CHECK OUT" />
-        </form>
     </table>
+
+    <div class="total-box">
+        <strong>Total Price:</strong> ₹ {{ total_price }}
+    </div>
+
+    <form action="{% url 'checkout' username %}">
+        <input type="submit" value="CHECK OUT" class="checkout-btn">
+    </form>
+
 </body>
 </html>

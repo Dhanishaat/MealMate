@@ -3,56 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Update Menu</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* TABLE STYLES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        th {
+            background-color: #1995AD;
+            color: white;
+            padding: 14px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background-color: #f1f9fb;
+        }
+
+        /* MENU ITEM IMAGE */
+        .menu-img {
+            width: 140px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-img:hover {
+            transform: scale(1.08);
+        }
+
+        /* FORM STYLES */
+        form {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .veg-text {
+            color: green;
+            font-weight: bold;
+        }
+
+        .non-veg-text {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-    <!-- show current menu -->
-    <table border="1">
+
+    <h2>🍴 Current Menu Items</h2>
+
+    <table>
         <thead>
             <tr>
-                <th>Item name</th>
-                <th>Picture</th>
+                <th>Item Name</th>
+                <th>Image</th>
                 <th>Description</th>
-                <th>Price</th>
-                <th>Is veg/Non</th>
+                <th>Price (₹)</th>
+                <th>Type</th>
             </tr>
         </thead>
+
         <tbody>
-            {%  for item in itemList %}
-                <tr>
-                    <td>{{ item.name }}</td>
-                    <td>
-                        <img src="{{ item.picture }}">
-                    </td>
-                    <td>{{ item.description }}</td>
-                    <td>{{ item.price }}</td>
-                    <td>{{ item.vegeterian }}</td>
-                </tr>
+            {% for item in itemList %}
+            <tr>
+                <td><strong>{{ item.name }}</strong></td>
+
+                <td>
+                    <img src="{{ item.picture }}" class="menu-img">
+                </td>
+
+                <td>{{ item.description }}</td>
+                <td>₹ {{ item.price }}</td>
+
+                <td>
+                    {% if item.vegeterian %}
+                        <span class="veg-text">Veg</span>
+                    {% else %}
+                        <span class="non-veg-text">Non-Veg</span>
+                    {% endif %}
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
 
+    <h2>➕ Add Menu Item</h2>
 
-    <!-- add food item (form) -->
-    <h2>Add Menu Item</h2>
     <form action="{% url 'update_menu' restaurant.id %}" method="post">
         {% csrf_token %}
-        <label for="name">Item Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
 
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea><br><br>
+        <label>Item Name</label>
+        <input type="text" name="name" required>
 
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" step="0.01" required><br><br>
+        <label>Description</label>
+        <textarea name="description" required></textarea>
 
-        <label for="vegeterian">Vegetarian:</label>
-        <input type="checkbox" id="vegeterian" name="vegeterian"><br><br>
+        <label>Price</label>
+        <input type="number" name="price" step="0.01" required>
 
-        <label for="picture">Image URL:</label>
-        <input type="url" id="picture" name="picture"><br><br>
+        <label>
+            <input type="checkbox" name="vegeterian">
+            Vegetarian
+        </label>
+
+        <label>Image URL</label>
+        <input type="url" name="picture">
 
         <button type="submit">Add Item</button>
     </form>
+
 </body>
 </html>

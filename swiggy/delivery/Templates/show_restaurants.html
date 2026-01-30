@@ -3,46 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Show Restaurants</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background-color: #1995AD;
+            color: white;
+            padding: 14px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background-color: #f1f9fb;
+        }
+
+        /* Restaurant Image */
+        .restaurant-img {
+            width: 170px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .restaurant-img:hover {
+            transform: scale(1.08);
+        }
+
+        /* Buttons */
+        .action-link {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 4px 0;
+            border-radius: 6px;
+            font-size: 13px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .update {
+            background-color: #28a745;
+        }
+
+        .delete {
+            background-color: #dc3545;
+        }
+
+        .menu {
+            background-color: #007bff;
+        }
+
+        .action-link:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
+
 <body>
-    
-    <table border="1">
+
+    <h2>🍽️ Restaurant Management</h2>
+
+    <table>
         <thead>
             <tr>
-                <th>Restaurant name</th>
-                <th>Picture</th>
+                <th>Restaurant</th>
+                <th>Image</th>
                 <th>Cuisine</th>
                 <th>Rating</th>
-                <th>Operations</th>
+                <th>Actions</th>
             </tr>
         </thead>
+
         <tbody>
-            {%  for r in restaurantList %}
-                <tr>
-                    <td>{{ r.name }}</td>
-                    <td>
-                        <img src="{{ r.picture }}">
-                    </td>
-                    <td>{{ r.cuisine }}</td>
-                    <td>{{ r.rating }}</td>
-                    <td>
-                        <a href="{% url 'open_update_restaurant' r.id %}">
-                            Update Restaurant Info
-                        </a>
-                        <br>
-                        <a href="{% url 'delete_restaurant' r.id %}">
-                            Delete Restaurant
-                        </a>
-                        <br>
-                        <a href="{% url 'open_update_menu' r.id %}">
-                            Update Menu
-                        </a>
-                    </td>
-                </tr>
+            {% for r in restaurantList %}
+            <tr>
+                <td><strong>{{ r.name }}</strong></td>
+
+                <td>
+                    <img src="{{ r.picture }}" class="restaurant-img">
+                </td>
+
+                <td>{{ r.cuisine }}</td>
+                <td>⭐ {{ r.rating }}</td>
+
+                <td>
+                    <a href="{% url 'open_update_restaurant' r.id %}" 
+                       class="action-link update">Update</a>
+                    <br>
+                    <a href="{% url 'delete_restaurant' r.id %}" 
+                       class="action-link delete">Delete</a>
+                    <br>
+                    <a href="{% url 'open_update_menu' r.id %}" 
+                       class="action-link menu">Menu</a>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
-    
+
 </body>
 </html>
